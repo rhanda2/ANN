@@ -1,0 +1,20 @@
+import os, sys
+import numpy as np
+
+#import libraries as needed
+
+def readDataLabels(): #TODO
+	#read in the data and the labels to feed into the ANN
+	return 
+
+def train_test_split(data,labels,n=0.8): #TODO
+
+	#split data in training and testing sets
+
+	return 
+
+def normalize_data(data):
+
+	# normalize/standardize the data
+
+	return
