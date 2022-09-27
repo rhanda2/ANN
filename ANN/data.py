@@ -6,13 +6,17 @@ from sklearn import datasets
 
 def readDataLabels(): 
 	#read in the data and the labels to feed into the ANN
-
 	data = datasets.load_digits()
-    X = data.data
+	X = data.data
 	y = data.target
 
 	return X,y
 
+def to_categorical(y):
+	
+	#Convert the nominal y values tocategorical
+
+	return y
 def train_test_split(data,labels,n=0.8): #TODO
 
 	#split data in training and testing sets
