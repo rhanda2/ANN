@@ -17,6 +17,7 @@ def to_categorical(y):
 	#Convert the nominal y values tocategorical
 
 	return y
+	
 def train_test_split(data,labels,n=0.8): #TODO
 
 	#split data in training and testing sets
