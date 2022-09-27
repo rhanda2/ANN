@@ -1,11 +1,17 @@
 import os, sys
 import numpy as np
+from sklearn import datasets
 
 #import libraries as needed
 
-def readDataLabels(): #TODO
+def readDataLabels(): 
 	#read in the data and the labels to feed into the ANN
-	return 
+
+	data = datasets.load_digits()
+    X = data.data
+	y = data.target
+
+	return X,y
 
 def train_test_split(data,labels,n=0.8): #TODO
 
@@ -13,7 +19,7 @@ def train_test_split(data,labels,n=0.8): #TODO
 
 	return 
 
-def normalize_data(data):
+def normalize_data(data): #TODO
 
 	# normalize/standardize the data
 
