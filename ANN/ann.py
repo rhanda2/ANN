@@ -2,6 +2,9 @@ import os, sys
 import numpy as np
 import math
 
+from data import readDataLabels, normalize_data, train_test_split, to_categorical
+from utils import accuracy_score
+
 # Create an MLP with 8 neurons
 # Input -> Hidden Layer -> Output Layer -> Output
 # Neuron = f(w.x + b)
@@ -44,5 +47,21 @@ class ANN:
         for epoch in range(num_epochs):
             pass
 
-    def test(self, dataset):
-        pass
+    def test(self, test_dataset):
+        accuracy = 0    # Test accuracy
+        # Get predictions from test dataset
+        # Calculate the prediction accuracy, see utils.py
+        return accuracy
+
+
+def main():
+    ann = ANN()
+
+    # Load dataset
+    dataset = readDataLabels()      # dataset[0] = X, dataset[1] = y
+
+    # Split data into train and test split. call function in data.py
+
+    # call ann->train()... Once trained, try to store the model to avoid re-training everytime
+
+    # Call ann->test().. to get accuracy in test set

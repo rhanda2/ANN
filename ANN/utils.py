@@ -60,6 +60,19 @@ class SoftmaxActivation:    # TODO: Make this work!!!
         pass
 
 
+class SigmoidActivation:    # TODO: Make this work!!!
+    def __init__(self):
+        pass
+
+    def __call__(self, y):
+        # TODO: Calculate Activation Function
+        pass
+
+    def __grad__(self):
+        # TODO: Calculate Gradients.. Remember this is calculated w.r.t. input to the function -> dy/dz
+        pass
+
+
 class ReLUActivation:
     def __init__(self):
         self.z = None
@@ -75,3 +88,9 @@ class ReLUActivation:
         # dy/dz = 1 if z was > 0 or dy/dz = 0 if z was <= 0
         gradient = np.where(self.z > 0, 1, 0)
         return gradient
+
+
+def accuracy_score(y_true, y_pred):
+    """ Compare y_true to y_pred and return the accuracy """
+    accuracy = np.sum(y_true == y_pred, axis=0) / len(y_true)
+    return accuracy
