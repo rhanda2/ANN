@@ -10,6 +10,8 @@ from utils import accuracy_score
 # Neuron = f(w.x + b)
 # Do forward and backward propagation
 
+mode = 'train'      # train/test... Optional mode to avoid training incase you want to load saved model and test only.
+
 class ANN:
     def __init__(self, num_input_features, num_hidden_units, num_outputs, hidden_unit_activation, output_activation, loss_function):
         self.num_input_features = num_input_features
@@ -54,7 +56,7 @@ class ANN:
         return accuracy
 
 
-def main():
+def main(argv):
     ann = ANN()
 
     # Load dataset
@@ -63,5 +65,14 @@ def main():
     # Split data into train and test split. call function in data.py
 
     # call ann->train()... Once trained, try to store the model to avoid re-training everytime
+    if mode == 'train':
+        pass        # Call ann training code here
+    else:
+        # Call loading of trained model here, if using this mode (Not required, provided for convenience)
+        raise NotImplementedError
 
-    # Call ann->test().. to get accuracy in test set
+    # Call ann->test().. to get accuracy in test set and print it.
+
+
+if __name__ == "__main__":
+    main(sys.argv)
