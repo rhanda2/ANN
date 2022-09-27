@@ -40,7 +40,7 @@ class ANN:
         # Take the optimization step.
         return
 
-    def train(self, dataset, num_epochs=100):
+    def train(self, dataset, learning_rate=0.01, num_epochs=100):
         for epoch in range(num_epochs):
             pass
 
