@@ -55,9 +55,6 @@ class CrossEntropyLoss:     # TODO: Make this work!!!
         y_gt = self.current_gt
         y_pred_clipped = np.clip(y_pred, 1e-15, 1 - 1e-15)
         gradient = -(y_gt / y_pred_clipped) + (1 - y_gt) / (1 - y_pred_clipped)
-        # gradient = - (y_gt / y_pred) + (1 - y_gt) / (1 - y_pred)
-        self.current_prediction = None
-        self.current_gt = None
         return gradient
 
 
@@ -97,7 +94,7 @@ class SigmoidActivation:    # TODO: Make this work!!!
 
     def grad(self):
         # TODO: Calculate Gradients.. Remember this is calculated w.r.t. input to the function -> dy/dz
-        f_x = 1 / (1 + np.exp(-1 * self.z))
+        f_x = self(self.z)
         f_dash = f_x*(1 - f_x)
         return f_dash
 
@@ -125,3 +122,7 @@ def accuracy_score(y_true, y_pred):
     y_true = np.argmax(y_true, axis=1)
     accuracy = np.sum(y_true == y_pred) / y_true.shape[0]
     return accuracy
+
+if __name__ == '__main__':
+    Sig = SigmoidActivation()
+    print(Sig(np.array([[1,1],[1,1]])))

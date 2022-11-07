@@ -75,7 +75,7 @@ class ANN:
         self.b1 -= self.learning_rate * self.db1
         return
 
-    def train(self, dataset, learning_rate=0.001, num_epochs=1000):
+    def train(self, dataset, learning_rate=0.002, num_epochs=1000):
         self.X_train = dataset[0]
         self.y_train = dataset[1]
         self.initialize_weights()
@@ -89,14 +89,20 @@ class ANN:
             if(np.nan == (self.loss[-1])):
                 print("Yahahaahahahah")
                 break
-        plt.plot(self.accuracy)
+        # plt.plot(self.accuracy)
         # print(self.accuracy)
         return self.y_pred
 
     def test(self, test_dataset):
         accuracy = 0    # Test accuracy
         # Get predictions from test dataset
+        X_test, y_test = test_dataset
+        z1 = X_test.dot(self.w1) + self.b1
+        a1 = self.hidden_unit_activation(z1)
+        z2 = a1.dot(self.w2) + self.b2
+        y_pred = self.output_activation(z2)
         # Calculate the prediction accuracy, see utils.py
+        accuracy = accuracy_score(y_test, y_pred)
         return accuracy
 
 
@@ -120,7 +126,8 @@ def main(argv):
         raise NotImplementedError
     print(y_pred[0], y_train[0])
     # Call ann->test().. to get accuracy in test set and print it.
-
+    accuracy = ann.test([X_test, y_test])
+    print(accuracy)
 
 if __name__ == "__main__":
     main(sys.argv)
