@@ -52,12 +52,13 @@ class ANN:
         
         accuracy = accuracy_score(self.y_pred, self.y_train)
         self.accuracy.append(accuracy)
-        self.loss.append(np.sum(self.loss_func(self.y_pred, self.y_train)))
+        losses = self.loss_func(self.y_pred, self.y_train)
+        self.loss.append(np.sum(losses))
         
         return
 
     def backward(self):     # TODO
-        self.da2 = self.loss_func.grad()
+        self.da2 = self.loss_func.grad(self.y_pred,self.y_train)
         self.dz2 = self.da2 * self.output_activation.grad()
         self.dw2 = self.a1.T.dot(self.dz2)
         self.db2 = np.sum(self.dz2, axis=0)
@@ -75,7 +76,7 @@ class ANN:
         self.b1 -= self.learning_rate * self.db1
         return
 
-    def train(self, dataset, learning_rate=0.002, num_epochs=1000):
+    def train(self, dataset, learning_rate=0.001, num_epochs=10000):
         self.X_train = dataset[0]
         self.y_train = dataset[1]
         self.initialize_weights()
@@ -86,9 +87,7 @@ class ANN:
             self.update_params()
             print("==============")
             print(f"Epoch number: {epoch}\nAccuracy: {self.accuracy[-1]}\nLoss: {self.loss[-1]}")
-            if(np.nan == (self.loss[-1])):
-                print("Yahahaahahahah")
-                break
+        
         # plt.plot(self.accuracy)
         # print(self.accuracy)
         return self.y_pred

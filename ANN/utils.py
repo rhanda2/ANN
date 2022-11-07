@@ -43,18 +43,14 @@ class CrossEntropyLoss:     # TODO: Make this work!!!
 
     def __call__(self, y_pred, y_gt):
         # TODO: Calculate Loss Function
-        self.current_prediction = y_pred
-        self.current_gt = y_gt
-        y_pred_clipped = np.clip(y_pred, 1e-15, 1 - 1e-15)
-        loss = -y_gt * np.log(y_pred_clipped) - (1 - y_gt) * np.log(1 - y_pred_clipped) # added in binomial not multinomial
+        y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        loss = - y_gt * np.log(y_pred) - (1 - y_gt) * np.log(1 - y_pred)
         return loss
 
-    def grad(self):
+    def grad(self, y_pred, y_gt):
         # TODO: Calculate Gradients for back propagation
-        y_pred = self.current_prediction
-        y_gt = self.current_gt
-        y_pred_clipped = np.clip(y_pred, 1e-15, 1 - 1e-15)
-        gradient = -(y_gt / y_pred_clipped) + (1 - y_gt) / (1 - y_pred_clipped)
+        y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        gradient = - (y_gt / y_pred) + (1 - y_gt) / (1 - y_pred)
         return gradient
 
 
