@@ -63,7 +63,6 @@ class SoftmaxActivation:    # TODO: Make this work!!!
     def __call__(self, z):
         # TODO: Calculate Activation Function
         self.z = z
-        z = np.clip(z, 1e-15, 1 - 1e-15)
         sums = np.sum(np.exp(z), axis=1)
         y = np.exp(z)/np.sum(np.exp(z))
         for i in range(z.shape[0]):

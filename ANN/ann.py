@@ -76,7 +76,7 @@ class ANN:
         self.b1 -= self.learning_rate * self.db1
         return
 
-    def train(self, dataset, learning_rate=0.001, num_epochs=10000):
+    def train(self, dataset, learning_rate=0.001, num_epochs=1000):
         self.X_train = dataset[0]
         self.y_train = dataset[1]
         self.initialize_weights()
