@@ -45,16 +45,17 @@ class CrossEntropyLoss:     # TODO: Make this work!!!
         # TODO: Calculate Loss Function
         self.current_prediction = y_pred
         self.current_gt = y_gt
-        y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)
-        loss = -y_gt * np.log(y_pred) - (1 - y_gt) * np.log(1 - y_pred) # added in binomial not multinomial
+        y_pred_clipped = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        loss = -y_gt * np.log(y_pred_clipped) - (1 - y_gt) * np.log(1 - y_pred_clipped) # added in binomial not multinomial
         return loss
 
     def grad(self):
         # TODO: Calculate Gradients for back propagation
         y_pred = self.current_prediction
         y_gt = self.current_gt
-        y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)
-        gradient = (y_gt / y_pred) + (1 - y_gt) / (1 - y_pred)
+        y_pred_clipped = np.clip(y_pred, 1e-15, 1 - 1e-15)
+        gradient = -(y_gt / y_pred_clipped) + (1 - y_gt) / (1 - y_pred_clipped)
+        # gradient = - (y_gt / y_pred) + (1 - y_gt) / (1 - y_pred)
         self.current_prediction = None
         self.current_gt = None
         return gradient
@@ -69,7 +70,11 @@ class SoftmaxActivation:    # TODO: Make this work!!!
     def __call__(self, z):
         # TODO: Calculate Activation Function
         self.z = z
+        z = np.clip(z, 1e-15, 1 - 1e-15)
+        sums = np.sum(np.exp(z), axis=1)
         y = np.exp(z)/np.sum(np.exp(z))
+        for i in range(z.shape[0]):
+            y[i] = np.exp(z[i])/sums[i]
         self.y = y
         return y
 
@@ -86,7 +91,7 @@ class SigmoidActivation:    # TODO: Make this work!!!
     def __call__(self, z):
         # TODO: Calculate Activation Function
         self.z = z 
-       
+        # z = np.clip(z, 1e-15, 1 - 1e-15)
         y =  1/(1 + np.exp(-1*z))
         return y
 

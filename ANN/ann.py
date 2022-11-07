@@ -58,7 +58,6 @@ class ANN:
 
     def backward(self):     # TODO
         self.da2 = self.loss_func.grad()
-        print(self.da2.shape)
         self.dz2 = self.da2 * self.output_activation.grad()
         self.dw2 = self.a1.T.dot(self.dz2)
         self.db2 = np.sum(self.dz2, axis=0)
@@ -70,24 +69,28 @@ class ANN:
         return
 
     def update_params(self):    # TODO
-        self.w2  -= self.learning_rate * self.dw2
+        self.w2 -= self.learning_rate * self.dw2
         self.b2 -= self.learning_rate * self.db2
-        self.w1  -= self.learning_rate * self.dw1
+        self.w1 -= self.learning_rate * self.dw1
         self.b1 -= self.learning_rate * self.db1
         return
 
     def train(self, dataset, learning_rate=0.001, num_epochs=1000):
         self.X_train = dataset[0]
         self.y_train = dataset[1]
+        self.initialize_weights()
+        self.learning_rate = learning_rate
         for epoch in range(num_epochs):
-            self.initialize_weights()
             self.forward()
             self.backward()
             self.update_params()
             print("==============")
-            print(f"Accuracy: {self.accuracy[-1]}\nLoss: {self.loss[-1]}")
-        # plt.plot(self.accuracy)
-        print(self.accuracy)
+            print(f"Epoch number: {epoch}\nAccuracy: {self.accuracy[-1]}\nLoss: {self.loss[-1]}")
+            if(np.nan == (self.loss[-1])):
+                print("Yahahaahahahah")
+                break
+        plt.plot(self.accuracy)
+        # print(self.accuracy)
         return self.y_pred
 
     def test(self, test_dataset):
